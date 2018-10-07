@@ -42,14 +42,6 @@ public class RequirementJd implements Serializable {
 		super();
 	}
 
-	public RequirementJd(String reqJdType, String description, Requirement requirement) {
-		super();
-		this.reqJdType = reqJdType;
-		this.description = description;
-		this.requirement = requirement;
-	}
-
-
 	// Getter / Setter
 
 	public Long getRequirementJdId() {

@@ -1,12 +1,12 @@
 package com.hueklr.recruitservice.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,10 +70,8 @@ public class Requirement implements  Serializable {
 	@Column(name = "comment2")
 	private String comment2;
 
-	@OneToMany(mappedBy="requirement")
+	@OneToMany(mappedBy="requirement", fetch=FetchType.LAZY)
 	private List<RequirementJd> requirementJdList;
-	
-	
 	
 	// Getter / Setter
 	public Long getRequirementId() {
@@ -209,27 +207,6 @@ public class Requirement implements  Serializable {
 		super();
 	}
 
-	public Requirement(Long requirementId, String requirementCode, String clientCode, String jobSourceHubCode,
-			String locationCode, String interviewAddr, String role, Integer minCtc, Integer maxCtc, Integer minExp,
-			Integer maxExp, Integer numberOfPositions, String comment1, String comment2,
-			List<RequirementJd> requirementJdList) {
-		super();
-		this.requirementId = requirementId;
-		this.requirementCode = requirementCode;
-		this.clientCode = clientCode;
-		this.jobSourceHubCode = jobSourceHubCode;
-		this.locationCode = locationCode;
-		this.interviewAddr = interviewAddr;
-		this.role = role;
-		this.minCtc = minCtc;
-		this.maxCtc = maxCtc;
-		this.minExp = minExp;
-		this.maxExp = maxExp;
-		this.numberOfPositions = numberOfPositions;
-		this.comment1 = comment1;
-		this.comment2 = comment2;
-		this.requirementJdList = requirementJdList;
-	}
 
 	@Override
 	public String toString() {
