@@ -31,11 +31,9 @@ public class RequirementServiceImpl implements RequirementService {
 
 	@Override
 	public boolean save(Requirement req) {
+		req.setRequirementCode();
 		reqRepo.save(req);
-		logger.info("---------requirement saved successfully---------");
 		
-		logger.info("---------saving req jd list---------");
-		logger.info(" jd req list " + req.getRequirementJdList());
 		for (RequirementJd reqJd : req.getRequirementJdList()) {
 			reqJd.setRequirement(req);
 			reqJdRepo.save(reqJd);	

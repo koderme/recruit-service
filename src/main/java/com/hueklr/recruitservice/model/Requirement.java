@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import utils.DateAndTime;
+
 
 @Entity
 @Table(name = "requirement")
@@ -23,8 +25,7 @@ public class Requirement implements  Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3969447642374165137L;
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "requirement_id")
@@ -88,10 +89,17 @@ public class Requirement implements  Serializable {
 	}
 
 	public void setRequirementCode(String requirementCode) {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());		
-		this.requirementCode = requirementCode +":" + sdf.format(timestamp); 
+		this.requirementCode = requirementCode;
 	}
 
+	public void setRequirementCode() {
+		// requirement id -- hub -- employer -- role --location 
+		this.requirementCode =  DateAndTime.ts() + "-" +  getJobSourceHubCode() + "-" +
+				getClientCode() + "-" +
+				getRole() + "-" +
+				getLocationCode();
+	}
+	
 	public String getClientCode() {
 		return clientCode;
 	}
