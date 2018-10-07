@@ -3,7 +3,6 @@ package com.hueklr.recruitservice.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import utils.DateAndTime;
 
@@ -70,7 +71,10 @@ public class Requirement implements  Serializable {
 	@Column(name = "comment2")
 	private String comment2;
 
+	// Note that "requirement" property must exists in child class
+	// In this case RequirementJd
 	@OneToMany(mappedBy="requirement", fetch=FetchType.LAZY)
+	@JsonManagedReference
 	private List<RequirementJd> requirementJdList;
 	
 	// Getter / Setter
@@ -214,8 +218,7 @@ public class Requirement implements  Serializable {
 				+ clientCode + ", jobSourceHubCode=" + jobSourceHubCode + ", locationCode=" + locationCode
 				+ ", interviewAddr=" + interviewAddr + ", role=" + role + ", minCtc=" + minCtc + ", maxCtc=" + maxCtc
 				+ ", minExp=" + minExp + ", maxExp=" + maxExp + ", numberOfPositions=" + numberOfPositions
-				+ ", comment1=" + comment1 + ", comment2=" + comment2 + ", requirementJdList=" + requirementJdList
-				+ "]";
+				+ ", comment1=" + comment1 + ", comment2=" + comment2 + ", requirementJdList=" + "--removed--"	+ "]";
 	}
 
 }

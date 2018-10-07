@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="requirement_jd")
@@ -33,8 +35,11 @@ public class RequirementJd implements Serializable {
 	@Column(name = "description")
 	private String description;
 	
+	// Note : JsonBackReference is being used to avoid cyclic dependency during serialization.
+	// Here, the referenced object be ignored for serialization.
 	@ManyToOne
 	@JoinColumn(name="requirement_id", nullable=false)
+	@JsonBackReference 
 	private Requirement requirement;
 
 	// Constructors
@@ -78,8 +83,7 @@ public class RequirementJd implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RequirementJd [reqJdType=" + reqJdType + ", description=" + description + ", requirement=" + requirement
-				+ "]";
+		return "RequirementJd [reqJdType=" + reqJdType + ", description=" + description + ", requirement=" + "--removed--"+ "]";
 	}
 
 		
