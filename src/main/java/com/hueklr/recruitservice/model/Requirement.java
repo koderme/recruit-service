@@ -1,15 +1,29 @@
 package com.hueklr.recruitservice.model;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "requirement")
-public class Requirement {
+public class Requirement implements  Serializable {
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3969447642374165137L;
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +69,12 @@ public class Requirement {
 	@Column(name = "comment2")
 	private String comment2;
 
+	@OneToMany(mappedBy="requirement")
+	private List<RequirementJd> requirementJdList;
+	
+	
+	
+	// Getter / Setter
 	public Long getRequirementId() {
 		return requirementId;
 	}
@@ -68,7 +88,8 @@ public class Requirement {
 	}
 
 	public void setRequirementCode(String requirementCode) {
-		this.requirementCode = requirementCode;
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());		
+		this.requirementCode = requirementCode +":" + sdf.format(timestamp); 
 	}
 
 	public String getClientCode() {
@@ -167,9 +188,23 @@ public class Requirement {
 		this.comment2 = comment2;
 	}
 
+	public List<RequirementJd> getRequirementJdList() {
+		return requirementJdList;
+	}
+
+	public void setRequirementJdList(List<RequirementJd> requirementJdList) {
+		this.requirementJdList = requirementJdList;
+	}
+	
+	// Constructors
+	public Requirement() {
+		super();
+	}
+
 	public Requirement(Long requirementId, String requirementCode, String clientCode, String jobSourceHubCode,
 			String locationCode, String interviewAddr, String role, Integer minCtc, Integer maxCtc, Integer minExp,
-			Integer maxExp, Integer numberOfPositions, String comment1, String comment2) {
+			Integer maxExp, Integer numberOfPositions, String comment1, String comment2,
+			List<RequirementJd> requirementJdList) {
 		super();
 		this.requirementId = requirementId;
 		this.requirementCode = requirementCode;
@@ -185,10 +220,7 @@ public class Requirement {
 		this.numberOfPositions = numberOfPositions;
 		this.comment1 = comment1;
 		this.comment2 = comment2;
-	}
-
-	public Requirement() {
-		super();
+		this.requirementJdList = requirementJdList;
 	}
 
 	@Override
@@ -197,8 +229,8 @@ public class Requirement {
 				+ clientCode + ", jobSourceHubCode=" + jobSourceHubCode + ", locationCode=" + locationCode
 				+ ", interviewAddr=" + interviewAddr + ", role=" + role + ", minCtc=" + minCtc + ", maxCtc=" + maxCtc
 				+ ", minExp=" + minExp + ", maxExp=" + maxExp + ", numberOfPositions=" + numberOfPositions
-				+ ", comment1=" + comment1 + ", comment2=" + comment2 + "]";
+				+ ", comment1=" + comment1 + ", comment2=" + comment2 + ", requirementJdList=" + requirementJdList
+				+ "]";
 	}
 
-	
 }
